@@ -4,7 +4,10 @@ package com.example.HelloWorld.helloWorld.Controller;
 import com.example.HelloWorld.helloWorld.Exceptions.UserNotFoundException;
 import com.example.HelloWorld.helloWorld.Model.Post;
 import com.example.HelloWorld.helloWorld.User.User;
-import com.example.HelloWorld.helloWorld.User.UserDaoServive;
+import com.example.HelloWorld.helloWorld.User.UserDaoService;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,7 +20,7 @@ import java.util.List;
 public class UserResource {
 
 
-    private UserDaoServive service = new UserDaoServive();
+    private UserDaoService service = new UserDaoService();
 
     @GetMapping(path = "/users")
     public List<User> getAllUSers() {
@@ -61,5 +64,16 @@ public class UserResource {
     public Boolean savePost(@PathVariable Integer id, @RequestBody Post post) {
         User user = getUser(id);
         return service.savePost(user, post);
+    }
+
+
+
+    private FilterProvider getFiltersForUser() {
+
+       SimpleBeanPropertyFilter propertyFilter = SimpleBeanPropertyFilter.filterOutAllExcept("id","birthDate",
+               "name","posts");
+        return new SimpleFilterProvider()
+                .addFilter("UserFilter", propertyFilter);
+
     }
 }

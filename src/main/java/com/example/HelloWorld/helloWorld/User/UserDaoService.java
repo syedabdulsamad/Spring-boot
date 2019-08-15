@@ -1,23 +1,19 @@
 package com.example.HelloWorld.helloWorld.User;
 
 import com.example.HelloWorld.helloWorld.Model.Post;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-import javafx.geometry.Pos;
-
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserDaoServive {
+public class UserDaoService {
 
     private static int usersCount = 3;
 
     private static List<User> users =  new ArrayList<>();
     static {
-        users.add(new User(1, "Adam", new Date()));
-        users.add(new User(2, "Eve", new Date()));
-        users.add(new User(3, "jack", new Date()));
+        users.add(new User(1, "Developer", "Adam", new Date()));
+        users.add(new User(2, "Doctor", "Eve", new Date()));
+        users.add(new User(3, "Engineer", "jack", new Date()));
 
         for (User user : users) {
             user.setPosts(createPosts(user.getId()));
